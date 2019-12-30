@@ -99,6 +99,8 @@ class _DBConnection {
     var re = await _db.insertCategory(name);
     if (re != null) {
       categories.add(Category(re, name['name']));
+      catString.add(name['name']);
+      catId.add((re));
     }
     print(re);
   }
@@ -127,17 +129,10 @@ class _DBConnection {
   }
 
   getCategorys() {
-    for (int i = 0; i < categories.length; i++) {
-      if (catString.length == 0) {
+    if (catString.length == 1) {
+      for (int i = 0; i < categories.length; i++) {
         catString.add(categories[i].name);
         catId.add((categories[i].id));
-      } else {
-        for (var item in catString) {
-          if (item != categories[i].name) {
-            catString.add(categories[i].name);
-            catId.add((categories[i].id));
-          }
-        }
       }
     }
   }
@@ -195,6 +190,7 @@ class _DBConnection {
 
     var re = await _db.deleteCategory(category);
     print('deleted from Category $re');
+    getCategorys();
   }
 
   editCategory(Category category) async {
@@ -204,6 +200,7 @@ class _DBConnection {
       }
     }
     await _db.editCategory(category);
+    getCategorys();
   }
 
   editItem(Item item) async {

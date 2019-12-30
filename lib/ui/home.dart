@@ -25,7 +25,9 @@ class HomeState extends State<Home> {
     model.initializeAllOrders();
     if (model.categories.isEmpty) {
       model.getCategories();
+
       model.getItems().then((val) {
+        model.getCategorys();
         model.fetch();
         if (model.categories.isEmpty) {
           currentCategroy = null;
@@ -44,7 +46,26 @@ class HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double menuSize = width * 30 / 100;
+    double menuwidth = width * 30 / 100;
+    int itemsCount = 3;
+    double raito = 1;
+    print(width);
+    // print(MediaQuery.of(context).size.height);
+    if (width < 610) {
+      itemsCount = 1;
+      raito = 1.4;
+      print(width);
+    } else if (width < 770) {
+      itemsCount = 2;
+      raito = .8;
+    } else if (width < 970) {
+      itemsCount = 2;
+      raito = 1;
+    } else if (width < 1040) {
+      itemsCount = 2;
+      raito = 1.1;
+    }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -56,17 +77,18 @@ class HomeState extends State<Home> {
           child: Row(
             children: <Widget>[
               Container(
+                height: MediaQuery.of(context).size.height,
                 color: Color.fromRGBO(225, 225, 225, .2),
                 padding: EdgeInsets.symmetric(vertical: 20.0),
-                width: menuSize,
+                width: menuwidth,
                 child: Column(
                   children: <Widget>[
                     SizedBox(
                       height: 10.0,
                     ),
-                    createLogoView(menuSize - 50),
+                    createLogoView(menuwidth - 50),
                     Container(
-                      height: MediaQuery.of(context).size.height - 200.0,
+                      height: MediaQuery.of(context).size.height - menuwidth,
                       child: StreamBuilder(
                         stream: model.cat.stream,
                         builder: (context, snapshot) {
@@ -297,7 +319,9 @@ class HomeState extends State<Home> {
                         ),
                       ),
                       Container(
-                          height: MediaQuery.of(context).size.height -300.0,
+                          height: MediaQuery.of(context).size.height < 600
+                              ? MediaQuery.of(context).size.height - 120.0
+                              : MediaQuery.of(context).size.height - 300.0,
                           width: MediaQuery.of(context).size.width * 60 / 100,
                           child: StreamBuilder(
                               stream: model.cat.stream,
@@ -308,11 +332,9 @@ class HomeState extends State<Home> {
                                         itemCount: currentCategroy.items.length,
                                         gridDelegate:
                                             SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount:
-                                                    width == 600.0 ? 1 : 2,
-                                                crossAxisSpacing: 10.0,
-                                                childAspectRatio:
-                                                     1.5),
+                                                crossAxisCount: itemsCount,
+                                                crossAxisSpacing: 20.0,
+                                                childAspectRatio: raito),
                                         itemBuilder: (context, index) {
                                           return InkWell(
                                             onTap: () {
@@ -347,15 +369,16 @@ class HomeState extends State<Home> {
                                                         MediaQuery.of(context)
                                                             .size
                                                             .width,
-                                                            height: 130.0,
+                                                    height: 130.0,
                                                     margin: EdgeInsets.only(
                                                         top: 30.0),
                                                     child: Image.memory(
-                                                      
-                                                        Base64Decoder().convert(
-                                                            currentCategroy
-                                                                .items[index]
-                                                                .image) , fit: BoxFit.cover,),
+                                                      Base64Decoder().convert(
+                                                          currentCategroy
+                                                              .items[index]
+                                                              .image),
+                                                      fit: BoxFit.cover,
+                                                    ),
                                                   ),
                                                   Container(
                                                     child: Row(
@@ -443,13 +466,13 @@ class HomeState extends State<Home> {
     return Container(
       width: size,
       height: size,
-      child: Image.asset('assets/logo.png', fit: BoxFit.cover),
+      child: Image.asset('assets/logo.jpeg', fit: BoxFit.cover),
     );
   }
 
   Widget createCategoryListView() {
     return Container(
-           child: ListView.builder(
+      child: ListView.builder(
         itemCount: model.categories.length,
         itemBuilder: (context, index) {
           return InkWell(
