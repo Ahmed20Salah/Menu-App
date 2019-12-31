@@ -39,7 +39,7 @@ class MenuDatabase {
 
   _onCreate(Database db, int newVersion) async {
     await db.execute(
-        'CREATE TABLE Items(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT , description TEXT , price INTEGER , category INTEGER  , image TEXT , FOREIGN KEY(category) REFERENCES Category(id))');
+        'CREATE TABLE Items(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT , description TEXT , price double , category INTEGER  , image TEXT , FOREIGN KEY(category) REFERENCES Category(id))');
     await db.execute(
         'CREATE TABLE Category(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE )');
     // await db.execute(

@@ -22,31 +22,31 @@ class EditCategoryState extends State<EditCategory> {
       'id': 1,
       'name': 'burger',
       'description': 'cheess with meat',
-      'price': 40
+      'price': 40.0
     }),
     Item.fromMap({
       'id': 1,
       'name': 'burger',
       'description': 'cheess with meat',
-      'price': 40
+      'price': 40.0
     }),
     Item.fromMap({
       'id': 1,
       'name': 'burger',
       'description': 'cheess with meat',
-      'price': 40
+      'price': 40.0
     }),
     Item.fromMap({
       'id': 1,
       'name': 'burger',
       'description': 'cheess with meat',
-      'price': 40
+      'price': 40.0
     }),
     Item.fromMap({
       'id': 1,
       'name': 'burger',
       'description': 'cheess with meat',
-      'price': 40
+      'price': 40.0
     }),
   ];
 
@@ -143,7 +143,7 @@ class EditCategoryState extends State<EditCategory> {
           borderRadius: BorderRadius.circular(10)),
       padding: EdgeInsets.all(5),
       margin: EdgeInsets.symmetric(horizontal: 10.0),
-      width: 190.0,
+      width: 210.0,
       height: 150.0,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -194,7 +194,10 @@ class EditCategoryState extends State<EditCategory> {
             // height: 100.0,
             width: MediaQuery.of(context).size.width,
             height: 100.0,
-            child: Image.memory(base64Decode(item.image) , fit: BoxFit.cover,),
+            child: Image.memory(
+              base64Decode(item.image),
+              fit: BoxFit.cover,
+            ),
           ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 10.0),
@@ -209,18 +212,18 @@ class EditCategoryState extends State<EditCategory> {
                       item.name,
                       style: TextStyle(color: Colors.white),
                     ),
-                  Container(
-                    width: 120.0,
-                    child:   Text(
-                      item.description,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  )
+                    Container(
+                      width: 120.0,
+                      child: Text(
+                        item.description,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    )
                   ],
                 ),
                 Text(
-                  item.price.toString(),
+                  '${item.price.toString()} SR',
                   style: TextStyle(
                     color: Colors.white,
                   ),

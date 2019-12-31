@@ -78,9 +78,9 @@ class HomeState extends State<Home> {
             children: <Widget>[
               Container(
                 height: MediaQuery.of(context).size.height,
+                width: menuwidth,
                 color: Color.fromRGBO(225, 225, 225, .2),
                 padding: EdgeInsets.symmetric(vertical: 20.0),
-                width: menuwidth,
                 child: Column(
                   children: <Widget>[
                     SizedBox(
@@ -94,7 +94,7 @@ class HomeState extends State<Home> {
                         builder: (context, snapshot) {
                           return currentCategroy == null
                               ? Container()
-                              : createCategoryListView();
+                              : createCategoryListView(width);
                         },
                       ),
                     )
@@ -102,12 +102,14 @@ class HomeState extends State<Home> {
                 ),
               ),
               Container(
+                  width: MediaQuery.of(context).size.width - menuwidth,
                   padding:
                       EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
                   color: Colors.black12,
                   child: Column(
                     children: <Widget>[
                       Container(
+                        width: MediaQuery.of(context).size.width,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
@@ -116,210 +118,211 @@ class HomeState extends State<Home> {
                               child: Text(
                                 'Table ${model.order.table}  ',
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 28),
+                                    color: Colors.white,
+                                    fontSize: width < 610 ? 18 : 28),
                               ),
                             ),
                             Container(
-                                width: MediaQuery.of(context).size.width *
-                                    45 /
-                                    100,
-                                child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Container(
-                                        alignment: Alignment.centerRight,
-                                        child: InkWell(
-                                          child: Column(
-                                            children: <Widget>[
-                                              Icon(
-                                                Icons.settings,
-                                                color: Colors.white,
-                                                size: 40.0,
-                                              ),
-                                              Text('Setting',
-                                                  style: TextStyle(
-                                                      color: Colors.white))
-                                            ],
-                                          ),
-                                          onTap: () {
-                                            showDialog(
-                                              context: context,
-                                              child: SingleChildScrollView(
-                                                child: AlertDialog(
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  title: Container(
-                                                    decoration: BoxDecoration(
-                                                        image: DecorationImage(
-                                                            image: AssetImage(
-                                                                'assets/Dark.png'),
-                                                            fit: BoxFit.cover),
-                                                        border: Border.all(),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    10.0)),
-                                                    width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width <
-                                                            1080
-                                                        ? MediaQuery.of(context)
-                                                            .size
-                                                            .width
-                                                        : MediaQuery.of(context)
-                                                                .size
-                                                                .width -
-                                                            500.0,
-                                                    padding:
-                                                        EdgeInsets.all(50.0),
-                                                    child: Form(
-                                                      child: Column(
-                                                        children: <Widget>[
-                                                          Text(
-                                                            'Login',
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      alignment: Alignment.centerRight,
+                                      child: InkWell(
+                                        child: Column(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.settings,
+                                              color: Colors.white,
+                                              size: width < 610 ? 22 : 40.0,
+                                            ),
+                                            Text('Setting',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize:
+                                                        width < 610 ? 11 : 22))
+                                          ],
+                                        ),
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            child: SingleChildScrollView(
+                                              child: AlertDialog(
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                title: Container(
+                                                  decoration: BoxDecoration(
+                                                      image: DecorationImage(
+                                                          image: AssetImage(
+                                                              'assets/Dark.png'),
+                                                          fit: BoxFit.cover),
+                                                      border: Border.all(),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0)),
+                                                  width: MediaQuery.of(context)
+                                                              .size
+                                                              .width <
+                                                          1080
+                                                      ? MediaQuery.of(context)
+                                                          .size
+                                                          .width
+                                                      : MediaQuery.of(context)
+                                                              .size
+                                                              .width -
+                                                          500.0,
+                                                  padding: EdgeInsets.all(50.0),
+                                                  child: Form(
+                                                    child: Column(
+                                                      children: <Widget>[
+                                                        Text(
+                                                          'Login',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 30.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 40.0,
+                                                        ),
+                                                        Container(
+                                                          width: 300.0,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5),
+                                                              border: Border.all(
+                                                                  color: Colors
+                                                                      .grey)),
+                                                          child: TextField(
                                                             style: TextStyle(
                                                                 color: Colors
-                                                                    .white,
-                                                                fontSize: 30.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 40.0,
-                                                          ),
-                                                          Container(
-                                                            width: 300.0,
-                                                            decoration: BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            5),
-                                                                border: Border.all(
+                                                                    .white),
+                                                            controller:
+                                                                _controllerUsername,
+                                                            decoration: InputDecoration(
+                                                                contentPadding:
+                                                                    EdgeInsets.only(
+                                                                        left:
+                                                                            4),
+                                                                border:
+                                                                    InputBorder
+                                                                        .none,
+                                                                hintStyle: TextStyle(
                                                                     color: Colors
-                                                                        .grey)),
-                                                            child: TextField(
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white),
-                                                              controller:
-                                                                  _controllerUsername,
-                                                              decoration: InputDecoration(
-                                                                  contentPadding:
-                                                                      EdgeInsets.only(
-                                                                          left:
-                                                                              4),
-                                                                  border:
-                                                                      InputBorder
-                                                                          .none,
-                                                                  hintStyle: TextStyle(
-                                                                      color: Colors
-                                                                          .white),
-                                                                  hintText:
-                                                                      'username'),
-                                                            ),
+                                                                        .white),
+                                                                hintText:
+                                                                    'username'),
                                                           ),
-                                                          Container(
-                                                            margin:
-                                                                EdgeInsets.only(
-                                                                    top: 20.0),
-                                                            width: 300.0,
-                                                            decoration: BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            5),
-                                                                border: Border.all(
+                                                        ),
+                                                        Container(
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  top: 20.0),
+                                                          width: 300.0,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5),
+                                                              border: Border.all(
+                                                                  color: Colors
+                                                                      .grey)),
+                                                          child: TextField(
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white),
+                                                            controller:
+                                                                _controllerPassword,
+                                                            decoration: InputDecoration(
+                                                                contentPadding:
+                                                                    EdgeInsets.only(
+                                                                        left:
+                                                                            4),
+                                                                border:
+                                                                    InputBorder
+                                                                        .none,
+                                                                hintStyle: TextStyle(
                                                                     color: Colors
-                                                                        .grey)),
-                                                            child: TextField(
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white),
-                                                              controller:
-                                                                  _controllerPassword,
-                                                              decoration: InputDecoration(
-                                                                  contentPadding:
-                                                                      EdgeInsets.only(
-                                                                          left:
-                                                                              4),
-                                                                  border:
-                                                                      InputBorder
-                                                                          .none,
-                                                                  hintStyle: TextStyle(
-                                                                      color: Colors
-                                                                          .white),
-                                                                  hintText:
-                                                                      'password'),
-                                                            ),
+                                                                        .white),
+                                                                hintText:
+                                                                    'password'),
                                                           ),
-                                                          Container(
-                                                            margin:
-                                                                EdgeInsets.only(
-                                                                    top: 20.0),
-                                                            child: RaisedButton(
-                                                              onPressed: () {
-                                                                if (_controllerUsername
-                                                                            .text ==
-                                                                        'admin' &&
-                                                                    _controllerPassword
-                                                                            .text ==
-                                                                        '123456') {
-                                                                  Navigator.push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                          builder: (context) =>
-                                                                              Edit()));
-                                                                }
-                                                              },
-                                                              child:
-                                                                  Text('Login'),
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
+                                                        ),
+                                                        Container(
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  top: 20.0),
+                                                          child: RaisedButton(
+                                                            onPressed: () {
+                                                              if (_controllerUsername
+                                                                          .text ==
+                                                                      'admin' &&
+                                                                  _controllerPassword
+                                                                          .text ==
+                                                                      '123456') {
+                                                                Navigator.push(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                        builder:
+                                                                            (context) =>
+                                                                                Edit()));
+                                                              }
+                                                            },
+                                                            child:
+                                                                Text('Login'),
+                                                          ),
+                                                        )
+                                                      ],
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                            );
-                                          },
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: width < 610 ? 20 : 40.0,
+                                    ),
+                                    Container(
+                                      alignment: Alignment.centerRight,
+                                      child: InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      OrderPage()));
+                                        },
+                                        child: Column(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.shopping_cart,
+                                              color: Colors.white,
+                                              size: width < 610 ? 22 : 40.0,
+                                            ),
+                                            Text('My Order',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize:
+                                                        width < 610 ? 11 : 22))
+                                          ],
                                         ),
                                       ),
-                                      SizedBox(
-                                        width: 40.0,
-                                      ),
-                                      Container(
-                                        alignment: Alignment.centerRight,
-                                        child: InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        OrderPage()));
-                                          },
-                                          child: Column(
-                                            children: <Widget>[
-                                              Icon(
-                                                Icons.shopping_cart,
-                                                color: Colors.white,
-                                                size: 40.0,
-                                              ),
-                                              Text('My Order',
-                                                  style: TextStyle(
-                                                      color: Colors.white))
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ])),
+                                    ),
+                                  ]),
+                            ),
                           ],
                         ),
                       ),
                       Container(
-                          height: MediaQuery.of(context).size.height < 600
+                          height: width < 600
                               ? MediaQuery.of(context).size.height - 120.0
                               : MediaQuery.of(context).size.height - 300.0,
                           width: MediaQuery.of(context).size.width * 60 / 100,
@@ -369,7 +372,7 @@ class HomeState extends State<Home> {
                                                         MediaQuery.of(context)
                                                             .size
                                                             .width,
-                                                    height: 130.0,
+                                                    height: width < 610 ? 80.0 : 130.0,
                                                     margin: EdgeInsets.only(
                                                         top: 30.0),
                                                     child: Image.memory(
@@ -404,7 +407,7 @@ class HomeState extends State<Home> {
                                                                         FontWeight
                                                                             .bold,
                                                                     fontSize:
-                                                                        18),
+                                                                       width < 610 ?12: 18),
                                                               ),
                                                             ),
                                                             SizedBox(
@@ -420,24 +423,24 @@ class HomeState extends State<Home> {
                                                                     color: Colors
                                                                         .white,
                                                                     fontSize:
-                                                                        16),
+                                                                       width < 610 ? 10: 16),
                                                               ),
                                                             )
                                                           ],
                                                         ),
                                                         Container(
                                                           child: Text(
-                                                            currentCategroy
+                                                          '${currentCategroy
                                                                 .items[index]
                                                                 .price
-                                                                .toString(),
+                                                                .toString()} SR',
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .white,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
-                                                                fontSize: 32),
+                                                                fontSize: width < 610 ? 18:32),
                                                           ),
                                                         ),
                                                       ],
@@ -466,11 +469,11 @@ class HomeState extends State<Home> {
     return Container(
       width: size,
       height: size,
-      child: Image.asset('assets/logo.jpeg', fit: BoxFit.cover),
+      child: Image.asset('assets/logo.png', fit: BoxFit.cover),
     );
   }
 
-  Widget createCategoryListView() {
+  Widget createCategoryListView(width) {
     return Container(
       child: ListView.builder(
         itemCount: model.categories.length,
@@ -487,13 +490,13 @@ class HomeState extends State<Home> {
                   ? Color(0xff80BB01)
                   : Colors.transparent,
               alignment: Alignment.center,
-              height: 70.0,
+              height: width < 610 ? 40.0 : 70.0,
               width: MediaQuery.of(context).size.width,
               child: Text(
                 model.categories[index].name,
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: 22,
+                    fontSize: width < 610 ? 14: 22,
                     fontWeight: FontWeight.bold),
               ),
             ),

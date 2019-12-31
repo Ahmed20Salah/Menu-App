@@ -11,7 +11,8 @@ import 'dart:typed_data';
 
 class AddItem extends StatefulWidget {
   var data;
-  AddItem({this.data});
+  var width;
+  AddItem({this.data, this.width});
   @override
   State<StatefulWidget> createState() {
     return AddItemState();
@@ -25,10 +26,14 @@ class AddItemState extends State<AddItem> {
   TextEditingController _price = TextEditingController();
 
   TextEditingController _des = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   int category = 0;
   Uint8List _avatarImg;
   bool isEditing = false;
   String sendImage;
+  bool error = false;
+  bool catError = false;
   @override
   void initState() {
     // model.getCategorys();
@@ -57,188 +62,248 @@ class AddItemState extends State<AddItem> {
             border: Border.all(color: Colors.white),
             image: DecorationImage(
                 image: AssetImage('assets/Dark.png'), fit: BoxFit.cover)),
-        width: MediaQuery.of(context).size.width * 80 / 100,
-        padding: EdgeInsets.symmetric(horizontal: 40.0),
-        height: 700.0,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              width: 100.0,
-              height: 100.0,
-              child:
-                  _avatarImg == null ? Container() : Image.memory(_avatarImg),
-            ),
-            RaisedButton(
-              onPressed: () async {
-                ImagePicker.pickImage(
-                  source: ImageSource.gallery,
-                  maxWidth: 400.0,
-                  maxHeight: 400.0,
-                ).then((File image) {
-                  setState(() {
-                    sendImage = base64Encode(image.readAsBytesSync());
-                    print(image.readAsBytesSync().length);
-                    print(sendImage.length);
-                    _avatarImg = base64Decode(sendImage);
-                  });
-                });
-              },
-              padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
-              child: Text(
-                'Upload',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.white,
-                ),
+        width: widget.width < 610
+            ? MediaQuery.of(context).size.width
+            : MediaQuery.of(context).size.width * 80 / 100,
+        padding:
+            EdgeInsets.symmetric(horizontal: widget.width < 610 ? 20.0 : 40.0),
+        height: 710.0,
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                width: 100.0,
+                height: 100.0,
+                child:
+                    _avatarImg == null ? Container() : Image.memory(_avatarImg),
               ),
-              color: Color(0xff80BB01),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.white),
-              ),
-              child: TextField(
-                controller: _name,
-                style: TextStyle(fontSize: 20.0, color: Colors.white),
-                decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 5),
-                    border: InputBorder.none,
-                    hintText: 'Item Name',
-                    hintStyle: TextStyle(color: Colors.white)),
-              ),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.white),
-              ),
-              child: TextField(
-                controller: _price,
-                style: TextStyle(fontSize: 20.0, color: Colors.white),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  WhitelistingTextInputFormatter.digitsOnly
-                ],
-                decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 5),
-                    border: InputBorder.none,
-                    hintText: 'Price',
-                    hintStyle: TextStyle(color: Colors.white)),
-              ),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.white),
-              ),
-              child: TextField(
-                controller: _des,
-                maxLines: 3,
-                style: TextStyle(fontSize: 20.0, color: Colors.white),
-                decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                    border: InputBorder.none,
-                    hintText: 'Description',
-                    hintStyle: TextStyle(color: Colors.white)),
-              ),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Container(
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.white)),
-              padding: EdgeInsets.symmetric(horizontal: 5),
-              child: DropdownButton(
-                  underline: Container(),
-                  isExpanded: true,
-                  onChanged: (value) {
+              RaisedButton(
+                onPressed: () async {
+                  ImagePicker.pickImage(
+                    source: ImageSource.gallery,
+                    maxWidth: 400.0,
+                    maxHeight: 400.0,
+                  ).then((File image) {
                     setState(() {
-                      inialvalue = value;
-
-                      category = model.catId[model.catString.indexOf(value)];
+                      sendImage = base64Encode(image.readAsBytesSync());
+                      print(image.readAsBytesSync().length);
+                      print(sendImage.length);
+                      _avatarImg = base64Decode(sendImage);
+                      error = false;
                     });
-                  },
-                  style: TextStyle(color: Colors.white, fontSize: 20.0),
-                  value: inialvalue,
-                  items: model.catString.map((item) {
-                    return DropdownMenuItem(
-                      value: item,
-                      child: Container(
-                        child: Text(
-                          item,
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
+                  });
+                },
+                padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
+                child: Text(
+                  'Upload',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.white,
+                  ),
+                ),
+                color: Color(0xff80BB01),
+              ),
+              error
+                  ? Container(
+                      margin: EdgeInsets.only(top: 4),
+                      child: Text(
+                        'Must Pick a Picture !',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 11,
                         ),
                       ),
-                    );
-                  }).toList()),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width ,
-              padding: EdgeInsets.symmetric( vertical: 40.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  RaisedButton(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 50.0, vertical: 20.0),
-                    child: Text(
-                      'Save',
-                      style: TextStyle(color: Colors.white, fontSize: 20.0),
-                    ),
-                    color: Color(0xff80BB01),
-                    onPressed: () async {
-                      // saveImage(sendImage, id)
-                      await model
-                          .addItem(Item.fromMap({
-                        'name': _name.text,
-                        'description': _des.text,
-                        'price': int.parse(_price.text),
-                        'category': category,
-                        'image': sendImage
-                      }))
-                          .then((val) {
-                        print(val);
-                        model.fetch();
-                        Navigator.pop(context);
+                    )
+                  : Container(),
+              SizedBox(
+                height: 20.0,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.white),
+                ),
+                child: TextFormField(
+                  controller: _name,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      print('empty');
+                      return 'This is Field can`t be Empty';
+                    }
+                  },
+                  style: TextStyle(fontSize: 20.0, color: Colors.white),
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                      border: InputBorder.none,
+                      hintText: 'Item Name',
+                      hintStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.white),
+                ),
+                child: TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      print('empty');
+                      return 'This is Field can`t be Empty';
+                    }
+                  },
+                  controller: _price,
+                  style: TextStyle(fontSize: 20.0, color: Colors.white),
+                  keyboardType: TextInputType.number,
+                  // inputFormatters: <TextInputFormatter>[
+                  //   WhitelistingTextInputFormatter.digitsOnly
+                  // ],
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                      border: InputBorder.none,
+                      hintText: 'Price',
+                      hintStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.white),
+                ),
+                child: TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      print('empty');
+                      return 'This is Field can`t be Empty';
+                    }
+                  },
+                  controller: _des,
+                  maxLines: 3,
+                  style: TextStyle(fontSize: 20.0, color: Colors.white),
+                  decoration: InputDecoration(
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                      border: InputBorder.none,
+                      hintText: 'Description',
+                      hintStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              Container(
+                decoration:
+                    BoxDecoration(border: Border.all(color: Colors.white)),
+                padding: EdgeInsets.symmetric(horizontal: 5),
+                child: DropdownButton(
+                    underline: Container(),
+                    isExpanded: true,
+                    onChanged: (value) {
+                      setState(() {
+                        inialvalue = value;
+                        category = model.catId[model.catString.indexOf(value)];
                       });
                     },
-                  ),
-                  RaisedButton(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 50.0, vertical: 20.0),
-                    child: Text(
-                      'Cancle',
-                      style: TextStyle(color: Colors.white, fontSize: 20.0),
-                    ),
-                    color: Color(0xff80BB01),
-                    onPressed: () {
-                      isEditing = true;
-                      _avatarImg = null;
-                      _name.text = null;
-                      _price.text = null;
-                      _des.text = null;
-                      category = null;
-                      inialvalue = null;
-                      widget.data = null;
-                      Navigator.pop(context);
-                    },
-                  )
-                ],
+                    style: TextStyle(color: Colors.white, fontSize: 20.0),
+                    value: inialvalue,
+                    items: model.catString.map((item) {
+                      return DropdownMenuItem(
+                        value: item,
+                        child: Container(
+                          child: Text(
+                            item,
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList()),
               ),
-            ),
-          ],
+              catError
+                  ? Container(
+                      margin: EdgeInsets.only(top: 4),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Must choose a Category !',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 11,
+                        ),
+                      ),
+                    )
+                  : Container(),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(vertical: 40.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    RaisedButton(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: widget.width < 610 ? 20.0: 50.0, vertical:  widget.width < 610 ? 15:20.0),
+                      child: Text(
+                        'Save',
+                        style: TextStyle(color: Colors.white, fontSize: 20.0),
+                      ),
+                      color: Color(0xff80BB01),
+                      onPressed: () async {
+                        if (!_formKey.currentState.validate()) {
+                          if (sendImage == null || inialvalue == 'Category') {
+                            error = true;
+                            catError = true;
+                          }
+                          return;
+                        }
+                        if (sendImage == null || inialvalue == 'Category') {
+                          error = true;
+                          catError = true;
+                        }
+                        // saveImage(sendImage, id)
+                        await model
+                            .addItem(Item.fromMap({
+                          'name': _name.text,
+                          'description': _des.text,
+                          'price': double.parse(_price.text),
+                          'category': category,
+                          'image': sendImage
+                        }))
+                            .then((val) {
+                          print(val);
+                          model.fetch();
+                          Navigator.pop(context);
+                        });
+                      },
+                    ),
+                    RaisedButton(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: widget.width < 610 ? 20.0:50.0, vertical: widget.width < 610 ? 15.0: 20.0),
+                      child: Text(
+                        'Cancle',
+                        style: TextStyle(color: Colors.white, fontSize: 20.0),
+                      ),
+                      color: Color(0xff80BB01),
+                      onPressed: () {
+                        isEditing = true;
+                        _avatarImg = null;
+                        _name.text = null;
+                        _price.text = null;
+                        _des.text = null;
+                        category = null;
+                        inialvalue = null;
+                        widget.data = null;
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

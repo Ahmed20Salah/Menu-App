@@ -2,7 +2,7 @@ class Item {
   int id;
   String name;
   String description;
-  int price;
+  double price;
   int category;
   String image;
   Item.fromMap(Map data) {

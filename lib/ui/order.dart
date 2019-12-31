@@ -14,6 +14,7 @@ class OrderPage extends StatefulWidget {
 class OrderPageState extends State<OrderPage> {
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -32,7 +33,7 @@ class OrderPageState extends State<OrderPage> {
                     margin: EdgeInsets.symmetric(horizontal: 40.0),
                     child: Text(
                       'Finish Order',
-                      style: TextStyle(color: Colors.white, fontSize: 28),
+                      style: TextStyle(color: Colors.white, fontSize: width < 550 ? 14: 28),
                     ),
                   ),
                   Container(
@@ -40,14 +41,14 @@ class OrderPageState extends State<OrderPage> {
                     child: Text('Table ${model.order.table}',
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 45,
+                            fontSize: width < 550 ? 14: 45,
                             fontWeight: FontWeight.bold)),
                   )
                 ],
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 40.0),
+              margin: EdgeInsets.symmetric(horizontal: width < 550 ? 20 :40.0),
               child: Column(
                 children: <Widget>[
                   Container(
@@ -68,7 +69,7 @@ class OrderPageState extends State<OrderPage> {
                                     child: Icon(
                                       Icons.remove_circle_outline,
                                       color: Colors.red,
-                                      size: 40.0,
+                                      size: width < 550 ? 22:  40.0,
                                     ),
                                     onTap: () {
                                       model.deleteOrder(
@@ -78,8 +79,8 @@ class OrderPageState extends State<OrderPage> {
                                   ),
                                 ),
                                 Container(
-                                  height: 100.0,
-                                  width: 100.0,
+                                  height: width < 550 ? 60: 100.0,
+                                  width: width < 550 ? 60:100.0,
                                   margin: EdgeInsets.only(left: 20.0),
                                   child: Image.memory(
                                     base64Decode(
@@ -89,7 +90,7 @@ class OrderPageState extends State<OrderPage> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 40.0,
+                                  width: width < 550 ? 20 :40.0,
                                 ),
                                 Container(
                                   // margin: EdgeInsets.only(right: 160.0),
@@ -98,15 +99,15 @@ class OrderPageState extends State<OrderPage> {
                                       border: Border.all(
                                           color: Colors.white, width: 2.0)),
                                   // width: MediaQuery.of(context).size.width-300.0,
-                                  height: 100.0,
+                                  height: width < 550 ? 60: 100.0,
                                   child: Container(
-                                    padding: EdgeInsets.all(20.0),
+                                    padding: EdgeInsets.all(width < 550 ? 10 :20.0),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
                                         Container(
-                                          height: 80.0,
+                                          height: width < 550 ? 60: 80.0,
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -118,15 +119,15 @@ class OrderPageState extends State<OrderPage> {
                                                   model.order.items[index].name,
                                                   style: TextStyle(
                                                       color: Colors.white,
-                                                      fontSize: 22),
+                                                      fontSize: width < 550 ? 15 :22),
                                                 ),
-                                                width: 130.0,
+                                                width: width < 550 ? 60 : 130.0,
                                               ),
-                                              SizedBox(
+                                            width < 550 ? Container() :  SizedBox(
                                                 height: 5.0,
                                               ),
                                               Container(
-                                                width: 160.0,
+                                                width: width < 550 ? 130 : 160.0,
                                                 child: Text(
                                                   model.order.items[index]
                                                       .description,
@@ -135,7 +136,7 @@ class OrderPageState extends State<OrderPage> {
                                                       TextOverflow.ellipsis,
                                                   style: TextStyle(
                                                       color: Colors.white,
-                                                      fontSize: 16),
+                                                      fontSize: width < 550 ? 15 :16),
                                                 ),
                                               ),
                                             ],
@@ -145,11 +146,11 @@ class OrderPageState extends State<OrderPage> {
                                           margin: EdgeInsets.only(left: 20.0),
                                           alignment: Alignment.center,
                                           child: Text(
-                                            '${model.order.items[index].price}\$',
+                                            '${model.order.items[index].price} SR',
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 27),
+                                                fontSize: width < 550 ? 15 :27),
                                           ),
                                         ),
                                       ],
@@ -168,8 +169,8 @@ class OrderPageState extends State<OrderPage> {
                       : Container(
                           // alignment: Alignment.centerLeft,
                           child: Text(
-                            'Total = ${model.order.total} \$',
-                            style: TextStyle(color: Colors.white, fontSize: 28),
+                            'Total = ${model.order.total} SR',
+                            style: TextStyle(color: Colors.white, fontSize: width < 550 ? 15 : 28),
                           ),
                         ),
                   InkWell(
@@ -184,15 +185,15 @@ class OrderPageState extends State<OrderPage> {
                         ? Container()
                         : Container(
                             margin: EdgeInsets.only(left: 30.0),
-                            width: 360.0,
-                            height: 100.0,
+                            width: width < 550 ? 120 :360.0,
+                            height: width < 550 ? 60 :100.0,
                             color: Colors.green,
                             child: Container(
                               alignment: Alignment.center,
                               child: Text(
                                 'Checkout',
                                 style: TextStyle(
-                                    fontSize: 42,
+                                    fontSize: width < 550 ? 15 :42,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
                               ),
