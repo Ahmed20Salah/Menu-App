@@ -34,6 +34,7 @@ class AddItemState extends State<AddItem> {
   String sendImage;
   bool error = false;
   bool catError = false;
+  List<String> img=[];
   @override
   void initState() {
     // model.getCategorys();
@@ -91,6 +92,7 @@ class AddItemState extends State<AddItem> {
                       print(image.readAsBytesSync().length);
                       print(sendImage.length);
                       _avatarImg = base64Decode(sendImage);
+                      img.add(sendImage);
                       error = false;
                     });
                   });
@@ -270,7 +272,7 @@ class AddItemState extends State<AddItem> {
                           'description': _des.text,
                           'price': double.parse(_price.text),
                           'category': category,
-                          'image': sendImage
+                          'image': img
                         }))
                             .then((val) {
                           print(val);

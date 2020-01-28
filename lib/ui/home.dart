@@ -6,6 +6,7 @@ import 'package:menu_app/models/category.dart';
 import 'package:menu_app/models/order.dart';
 import 'package:menu_app/ui/edit.dart';
 import 'package:menu_app/ui/order.dart';
+import 'package:menu_app/ui/widgets/description.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -43,9 +44,10 @@ class HomeState extends State<Home> {
     super.initState();
   }
 
+  double width;
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    width = MediaQuery.of(context).size.width;
     double menuwidth = width * 30 / 100;
     int itemsCount = 3;
     double raito = 1;
@@ -56,11 +58,11 @@ class HomeState extends State<Home> {
       raito = 1.4;
       print(width);
     } else if (width < 770) {
-      itemsCount = 2;
-      raito = .8;
+      itemsCount = 1;
+      raito = 1.8;
     } else if (width < 970) {
       itemsCount = 2;
-      raito = 1;
+      raito = .9;
     } else if (width < 1040) {
       itemsCount = 2;
       raito = 1.1;
@@ -70,6 +72,7 @@ class HomeState extends State<Home> {
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('assets/Dark.png'), fit: BoxFit.cover),
@@ -79,13 +82,14 @@ class HomeState extends State<Home> {
               Container(
                 height: MediaQuery.of(context).size.height,
                 width: menuwidth,
+                constraints: BoxConstraints.expand(width: 300.0),
                 color: Color.fromRGBO(225, 225, 225, .2),
                 padding: EdgeInsets.symmetric(vertical: 20.0),
                 child: Column(
                   children: <Widget>[
-                    SizedBox(
-                      height: 10.0,
-                    ),
+                    // SizedBox(
+                    //   height: 10.0,
+                    // ),
                     createLogoView(menuwidth - 50),
                     Container(
                       height: MediaQuery.of(context).size.height - menuwidth,
@@ -102,7 +106,7 @@ class HomeState extends State<Home> {
                 ),
               ),
               Container(
-                  width: MediaQuery.of(context).size.width - menuwidth,
+                  width: MediaQuery.of(context).size.width - menuwidth - 60.0,
                   padding:
                       EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
                   color: Colors.black12,
@@ -114,7 +118,7 @@ class HomeState extends State<Home> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Container(
-                              width: 100.0,
+                              // width: 100.0,
                               child: Text(
                                 'Table ${model.order.table}  ',
                                 style: TextStyle(
@@ -322,9 +326,7 @@ class HomeState extends State<Home> {
                         ),
                       ),
                       Container(
-                          height: width < 600
-                              ? MediaQuery.of(context).size.height - 120.0
-                              : MediaQuery.of(context).size.height - 300.0,
+                          height: MediaQuery.of(context).size.height - 130.0,
                           width: MediaQuery.of(context).size.width * 60 / 100,
                           child: StreamBuilder(
                               stream: model.cat.stream,
@@ -336,123 +338,10 @@ class HomeState extends State<Home> {
                                         gridDelegate:
                                             SliverGridDelegateWithFixedCrossAxisCount(
                                                 crossAxisCount: itemsCount,
-                                                crossAxisSpacing: 20.0,
+                                                crossAxisSpacing: 10.0,
                                                 childAspectRatio: raito),
                                         itemBuilder: (context, index) {
-                                          return InkWell(
-                                            onTap: () {
-                                              model.addOrder(
-                                                  currentCategroy.items[index]);
-                                              final snackBar = SnackBar(
-                                                content: Text('Item Added'),
-                                              );
-
-                                              Scaffold.of(context)
-                                                  .showSnackBar(snackBar);
-                                            },
-                                            child: Container(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 20.0),
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: Colors.grey,
-                                                      width: 2.0),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          15)),
-                                              margin:
-                                                  EdgeInsets.only(bottom: 20.0),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: <Widget>[
-                                                  Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                            .size
-                                                            .width,
-                                                    height: width < 610 ? 80.0 : 130.0,
-                                                    margin: EdgeInsets.only(
-                                                        top: 30.0),
-                                                    child: Image.memory(
-                                                      Base64Decoder().convert(
-                                                          currentCategroy
-                                                              .items[index]
-                                                              .image),
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: <Widget>[
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: <Widget>[
-                                                            Container(
-                                                              child: Text(
-                                                                currentCategroy
-                                                                    .items[
-                                                                        index]
-                                                                    .name,
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                       width < 610 ?12: 18),
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            Container(
-                                                              child: Text(
-                                                                currentCategroy
-                                                                    .items[
-                                                                        index]
-                                                                    .description,
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                       width < 610 ? 10: 16),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                        Container(
-                                                          child: Text(
-                                                          '${currentCategroy
-                                                                .items[index]
-                                                                .price
-                                                                .toString()} SR',
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: width < 610 ? 18:32),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10.0,
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          );
+                                          return _item(currentCategroy, index);
                                         },
                                       );
                               }))
@@ -465,10 +354,101 @@ class HomeState extends State<Home> {
     );
   }
 
+  Widget _item(urrentCategroy, index) {
+   return InkWell(
+      onTap: () {
+        // model.addOrder(
+        //     currentCategroy.items[index]);
+        // final snackBar = SnackBar(
+        //   content: Text('Item Added'),
+        // );
+
+        // Scaffold.of(context)
+        //     .showSnackBar(snackBar);
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            backgroundColor: Colors.transparent,
+            content: Description(currentCategroy.items[index]),
+          ),
+        );
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10.0),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey, width: 2.0),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        margin: EdgeInsets.only(bottom: 20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: width < 600 ? 80.0 : 130.0,
+              margin: EdgeInsets.only(top: 30.0),
+              child: Image.memory(
+                Base64Decoder().convert(currentCategroy.items[index].image[0]),
+                fit: BoxFit.cover,
+              ),
+            ),
+            Container(
+              
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        child: Text(
+                          currentCategroy.items[index].name,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: width < 610 ? 12 : 18),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        child: Text(
+                          currentCategroy.items[index].description,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: width < 610 ? 10 : 16),
+                        ),
+                      )
+                    ],
+                  ),
+                  Container(
+                    width: 70.0,
+                    child: Text(
+                      '${currentCategroy.items[index].price.toString()} SR',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: width < 610 ? 18 : 16),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10.0,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget createLogoView(size) {
     return Container(
       width: size,
-      height: size,
+      constraints: BoxConstraints.expand(height: 200.0),
       child: Image.asset('assets/logo.png', fit: BoxFit.cover),
     );
   }
@@ -496,7 +476,7 @@ class HomeState extends State<Home> {
                 model.categories[index].name,
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: width < 610 ? 14: 22,
+                    fontSize: width < 610 ? 14 : 22,
                     fontWeight: FontWeight.bold),
               ),
             ),

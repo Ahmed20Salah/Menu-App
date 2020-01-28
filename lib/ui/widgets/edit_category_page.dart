@@ -50,8 +50,11 @@ class EditCategoryState extends State<EditCategory> {
     }),
   ];
 
+
   @override
   Widget build(BuildContext context) {
+  var width = MediaQuery.of(context).size.width;
+
     return Column(
       children: <Widget>[
         Container(
@@ -73,6 +76,7 @@ class EditCategoryState extends State<EditCategory> {
                         child: AlertDialog(
                       title: AddCategory(
                         cat: widget.data,
+                        width: width,
                       ),
                     )),
                   );
@@ -195,7 +199,7 @@ class EditCategoryState extends State<EditCategory> {
             width: MediaQuery.of(context).size.width,
             height: 100.0,
             child: Image.memory(
-              base64Decode(item.image),
+              base64Decode(item.image[0]),
               fit: BoxFit.cover,
             ),
           ),

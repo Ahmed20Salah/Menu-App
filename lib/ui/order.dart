@@ -69,7 +69,7 @@ class OrderPageState extends State<OrderPage> {
                                     child: Icon(
                                       Icons.remove_circle_outline,
                                       color: Colors.red,
-                                      size: width < 550 ? 22:  40.0,
+                                      size: width < 600 ? 22:  40.0,
                                     ),
                                     onTap: () {
                                       model.deleteOrder(
@@ -79,18 +79,18 @@ class OrderPageState extends State<OrderPage> {
                                   ),
                                 ),
                                 Container(
-                                  height: width < 550 ? 60: 100.0,
-                                  width: width < 550 ? 60:100.0,
+                                  height: width < 600 ? 60: 100.0,
+                                  width: width < 600 ? 60:100.0,
                                   margin: EdgeInsets.only(left: 20.0),
                                   child: Image.memory(
                                     base64Decode(
-                                        model.order.items[index].image),
+                                        model.order.items[index].image[0]),
                                     width: 100.0,
                                     height: 100.0,
                                   ),
                                 ),
                                 SizedBox(
-                                  width: width < 550 ? 20 :40.0,
+                                  width: width < 610 ? 20 :40.0,
                                 ),
                                 Container(
                                   // margin: EdgeInsets.only(right: 160.0),

@@ -111,7 +111,7 @@ class _DBConnection {
       for (int j = 0; j < categories.length; j++) {
         if (item.category == categories[j].id) {
           print('added');
-          categories[j].addItem(Item.fromMap(item.toMap()));
+          categories[j].addItem(item);
         }
       }
     }
@@ -138,7 +138,7 @@ class _DBConnection {
   }
 
   getItems() async {
-    print('getItems');
+    print('getItems ');
     await _db.getItems().then((val) {
       print(val);
 
@@ -151,7 +151,7 @@ class _DBConnection {
                 description: val[i]['description'],
                 price: val[i]['price'],
                 category: val[i]['category'],
-                image: val[i]['image']));
+                image: val[i]['image'].split('!')));
           }
         }
       }
@@ -222,8 +222,7 @@ class _DBConnection {
     order.total += item.price;
     for (int i = 0; i < allOrders.length; i++) {
       if (allOrders[i].table == order.table) {
-        allOrders[i].items.add(item);
-        allOrders[i].total += item.price;
+        allOrders[i] = order;
       }
     }
   }
@@ -252,8 +251,7 @@ class _DBConnection {
     }
     for (int i = 0; i < allOrders.length; i++) {
       if (allOrders[i].table == order.table) {
-        allOrders[i].items.removeAt(i);
-        allOrders[i].total -= item.price;
+        allOrders[i] = order;
       }
     }
   }

@@ -26,9 +26,10 @@ class EditState extends State<Edit> {
         decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('assets/Dark.png'), fit: BoxFit.cover)),
-        child: ListView(
+        child: Column(
           children: <Widget>[
             Container(
+              height: 100.0,
               padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -233,7 +234,7 @@ class EditState extends State<Edit> {
               ),
             ),
             Container(
-                height: MediaQuery.of(context).size.height,
+                height: MediaQuery.of(context).size.height -100.0,
                 child: StreamBuilder(
                   stream: model.cat.stream,
                   builder: (context, snapshot) {
