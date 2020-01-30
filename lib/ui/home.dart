@@ -82,7 +82,7 @@ class HomeState extends State<Home> {
               Container(
                 height: MediaQuery.of(context).size.height,
                 width: menuwidth,
-                constraints: BoxConstraints.expand(width: 300.0),
+                constraints: BoxConstraints.expand(width: 250.0),
                 color: Color.fromRGBO(225, 225, 225, .2),
                 padding: EdgeInsets.symmetric(vertical: 20.0),
                 child: Column(
@@ -106,7 +106,7 @@ class HomeState extends State<Home> {
                 ),
               ),
               Container(
-                  width: MediaQuery.of(context).size.width - menuwidth - 60.0,
+                  width: MediaQuery.of(context).size.width - menuwidth - 30.0,
                   padding:
                       EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
                   color: Colors.black12,
@@ -327,7 +327,7 @@ class HomeState extends State<Home> {
                       ),
                       Container(
                           height: MediaQuery.of(context).size.height - 130.0,
-                          width: MediaQuery.of(context).size.width * 60 / 100,
+                          width: MediaQuery.of(context).size.width * 70 / 100,
                           child: StreamBuilder(
                               stream: model.cat.stream,
                               builder: (context, snapshot) {
@@ -355,7 +355,7 @@ class HomeState extends State<Home> {
   }
 
   Widget _item(urrentCategroy, index) {
-   return InkWell(
+    return InkWell(
       onTap: () {
         // model.addOrder(
         //     currentCategroy.items[index]);
@@ -393,44 +393,46 @@ class HomeState extends State<Home> {
               ),
             ),
             Container(
-              
+              width: MediaQuery.of(context).size.width,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        child: Text(
-                          currentCategroy.items[index].name,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: width < 610 ? 12 : 18),
+                  Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          child: Text(
+                            currentCategroy.items[index].name,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: width < 610 ? 12 : 18),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                        child: Text(
-                          currentCategroy.items[index].description,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: width < 610 ? 10 : 16),
+                        SizedBox(
+                          height: 5,
                         ),
-                      )
-                    ],
+                        Container(
+                          child: Text(
+                            currentCategroy.items[index].description,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: width < 610 ? 10 : 16),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                   Container(
-                    width: 70.0,
+                    // width:85.0,
                     child: Text(
-                      '${currentCategroy.items[index].price.toString()} SR',
+                      '${currentCategroy.items[index].price.toString()}0 SR',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: width < 610 ? 18 : 16),
+                          fontSize: width < 610 ? 17 : 15),
                     ),
                   ),
                 ],

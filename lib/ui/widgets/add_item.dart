@@ -34,7 +34,7 @@ class AddItemState extends State<AddItem> {
   String sendImage;
   bool error = false;
   bool catError = false;
-  List<String> img=[];
+  List<String> img = [];
   @override
   void initState() {
     // model.getCategorys();
@@ -75,10 +75,54 @@ class AddItemState extends State<AddItem> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                width: 100.0,
                 height: 100.0,
-                child:
-                    _avatarImg == null ? Container() : Image.memory(_avatarImg),
+                child: _avatarImg == null
+                    ? Container()
+                    : ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: img.length,
+                        itemBuilder: (context, index) {
+                          print(img.length);
+                          return Container(
+                            child: Stack(children: [
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 10.0),
+                                height: 100.0,
+                                width: 100.0,
+                                child: Image.memory(
+                                  base64Decode(img[index]),
+                                ),
+                              ),
+                              Positioned(
+                                top: 0,
+                                left: 0,
+                                child: InkWell(
+                                  onTap: () {
+                                    setState(
+                                      () {
+                                        img.removeAt(index);
+                                      },
+                                    );
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    width: 30.0,
+                                    height: 30.0,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      color: Colors.red,
+                                    ),
+                                    child: Icon(
+                                      Icons.clear,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ]),
+                          );
+                        },
+                      ),
               ),
               RaisedButton(
                 onPressed: () async {
@@ -247,7 +291,8 @@ class AddItemState extends State<AddItem> {
                   children: <Widget>[
                     RaisedButton(
                       padding: EdgeInsets.symmetric(
-                          horizontal: widget.width < 610 ? 20.0: 50.0, vertical:  widget.width < 610 ? 15:20.0),
+                          horizontal: widget.width < 610 ? 20.0 : 50.0,
+                          vertical: widget.width < 610 ? 15 : 20.0),
                       child: Text(
                         'Save',
                         style: TextStyle(color: Colors.white, fontSize: 20.0),
@@ -283,7 +328,8 @@ class AddItemState extends State<AddItem> {
                     ),
                     RaisedButton(
                       padding: EdgeInsets.symmetric(
-                          horizontal: widget.width < 610 ? 20.0:50.0, vertical: widget.width < 610 ? 15.0: 20.0),
+                          horizontal: widget.width < 610 ? 20.0 : 50.0,
+                          vertical: widget.width < 610 ? 15.0 : 20.0),
                       child: Text(
                         'Cancle',
                         style: TextStyle(color: Colors.white, fontSize: 20.0),
