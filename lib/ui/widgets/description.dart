@@ -33,17 +33,20 @@ class DescriptionState extends State<Description> {
       child: _mode
           ? Center(
               child: Stack(
+                alignment: Alignment.center,
                 children: <Widget>[
                   Container(
-                      alignment: Alignment.center,
-                      constraints: BoxConstraints(
-                          maxHeight: MediaQuery.of(context).size.height,
-                          maxWidth: MediaQuery.of(context).size.width),
-                      decoration: BoxDecoration(
-                          // color: Colors.white,
-                          ),
-                      child:
-                          Image.memory(base64Decode(widget.item.image[index]))),
+                    alignment: Alignment.center,
+                    constraints: BoxConstraints(
+                        maxHeight: MediaQuery.of(context).size.height,
+                        maxWidth: MediaQuery.of(context).size.width),
+                    decoration: BoxDecoration(
+                        // color: Colors.white,
+                        ),
+                    child: Image.memory(
+                      base64Decode(widget.item.image[index]),
+                    ),
+                  ),
                   Container(
                     alignment: Alignment.topLeft,
                     child: IconButton(
@@ -69,7 +72,7 @@ class DescriptionState extends State<Description> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         index != 0
-                            ?  IconButton(
+                            ? IconButton(
                                 padding: EdgeInsets.all(0),
                                 icon: Icon(
                                   Icons.arrow_back,
@@ -83,7 +86,8 @@ class DescriptionState extends State<Description> {
                                     });
                                   }
                                 },
-                              ) : Container(),
+                              )
+                            : Container(),
                         index < widget.item.image.length - 2
                             ? IconButton(
                                 padding: EdgeInsets.all(0),
@@ -110,135 +114,189 @@ class DescriptionState extends State<Description> {
               ),
             )
           : Container(
+              width: MediaQuery.of(context).size.width * 70 / 100,
+
+              alignment: Alignment.center,
               decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('assets/Dark.png'), fit: BoxFit.cover),
               ),
               // height: MediaQuery.of(context).size.height * 50 / 100,
-              width: MediaQuery.of(context).size.width,
               constraints: BoxConstraints(minWidth: 400.0, minHeight: 400.0),
               padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   InkWell(
-                    onTap: () {
-                      setState(() {
-                        _mode = true;
-                      });
-                    },
-                    child: Container(
-                      constraints:
-                          BoxConstraints(maxHeight: 300.0, maxWidth: 300.0),
-                      child: Image.memory(
-                        Base64Decoder().convert(widget.item.image[index]),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
+                      onTap: () {
+                        setState(() {
+                          _mode = true;
+                        });
+                      },
+                      child: Center(
+                        child: Container(
+                          constraints:
+                              BoxConstraints(maxHeight: 300.0, maxWidth: 300.0),
+                          child: Image.memory(
+                            Base64Decoder().convert(widget.item.image[index]),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      )),
                   SizedBox(
                     height: 20.0,
                   ),
-                  Container(
-                    height: 120.0,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: widget.item.image.length - 1,
-                      itemBuilder: (context, nume) {
-                        return Container(
-                          margin: EdgeInsets.symmetric(horizontal: 10.0),
-                          constraints:
-                              BoxConstraints(maxHeight: 120.0, maxWidth: 100.0),
-                          child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                this.image = image;
-                                index = nume;
-                              });
-                            },
-                            child: Image.memory(
-                              base64Decode(widget.item.image[nume]),
-                            ),
-                          ),
-                        );
-                      },
+                  Center(
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 120.0,
+                      width: MediaQuery.of(context).size.width * 50 / 100.0,
+                      constraints: BoxConstraints(maxWidth: 400.0),
+                      child: Center(
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: widget.item.image.length - 1,
+                          itemBuilder: (context, nume) {
+                            return Container(
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.symmetric(horizontal: 10.0),
+                              constraints: BoxConstraints(
+                                  maxHeight: 120.0, maxWidth: 100.0),
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    this.image = image;
+                                    index = nume;
+                                  });
+                                },
+                                child: Image.memory(
+                                  base64Decode(widget.item.image[nume]),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                     ),
                   ),
                   Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    constraints: BoxConstraints(maxHeight: 250.0),
+                    width: MediaQuery.of(context).size.width,
+                    alignment: Alignment.center,
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
-                              Text(
-                                widget.item.name,
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 24),
-                              ),
                               Container(
-                                width: 120.0,
+                                alignment: Alignment.centerRight,
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.end,
                                   children: <Widget>[
-                                    InkWell(
-                                      child: Container(
-                                        child: Icon(
-                                          Icons.add_circle_outline,
-                                          color: Colors.white,
-                                          size: 35.0,
-                                        ),
-                                      ),
-                                      onTap: () {
-                                        setState(() {
-                                          count++;
-                                        });
-                                      },
-                                    ),
                                     Text(
-                                      '$count',
+                                      ' ${widget.item.name}',
+                                      textDirection: TextDirection.rtl,
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 24),
                                     ),
-                                    InkWell(
-                                      child: Container(
-                                        child: Icon(
-                                          Icons.remove_circle_outline,
-                                          color: Colors.white,
-                                          size: 35.0,
-                                        ),
-                                      ),
-                                      onTap: () {
-                                        if (count > 1) {
-                                          setState(() {
-                                            count--;
-                                          });
-                                        }
-                                      },
+                                    Text(
+                                      ':الاسم',
+                                      style: TextStyle(
+                                          color: Colors.green, fontSize: 24),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Container(
+                                alignment: Alignment.centerRight,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    Text(
+                                      ' ${widget.item.price}',
+                                      textDirection: TextDirection.rtl,
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 24),
+                                    ),
+                                    Text(
+                                      ':السعر',
+                                      style: TextStyle(
+                                          color: Colors.green, fontSize: 24),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Container(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                   Container(
+                                     constraints: BoxConstraints(maxWidth:300.0),
+                                     
+                                     child:Text(
+                                      ' ${widget.item.description}',
+                                      textDirection: TextDirection.rtl,
+                                      softWrap: true,
+                                      maxLines: 4,
+
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 24),
+                                    ), ) ,
+                                    Text(
+                                      ':الوصف',
+                                      style: TextStyle(
+                                          color: Colors.green, fontSize: 24),
                                     ),
                                   ],
                                 ),
                               ),
                             ],
                           ),
-                        ),
-                        SizedBox(
-                          height: 5,
+                        ]),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Container(
+                    width: 140.0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        IconButton(
+                          icon: Icon(
+                            Icons.remove_circle_outline,
+                            size: 35,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              if (count > 1) {
+                                count--;
+                              }
+                            });
+                          },
                         ),
                         Text(
-                          widget.item.price.toString(),
-                          style: TextStyle(color: Colors.white, fontSize: 24),
+                          count.toString(),
+                          style: TextStyle(fontSize: 28, color: Colors.white),
                         ),
-                        SizedBox(
-                          height: 5,
+                        IconButton(
+                          icon: Icon(Icons.add_circle_outline,
+                              size: 35, color: Colors.white),
+                          onPressed: () {
+                            setState(() {
+                              count++;
+                            });
+                          },
                         ),
-                        Text(
-                          widget.item.description,
-                          maxLines: 3,
-                          softWrap: true,
-                          style: TextStyle(color: Colors.white, fontSize: 24),
-                        )
                       ],
                     ),
                   ),
@@ -267,7 +325,7 @@ class DescriptionState extends State<Description> {
                         Navigator.pop(context);
                       }
                     },
-                  )
+                  ),
                 ],
               ),
             ),
