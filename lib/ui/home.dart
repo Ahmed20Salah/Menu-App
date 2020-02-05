@@ -451,7 +451,8 @@ class HomeState extends State<Home> {
     return Container(
       width: size,
       constraints: BoxConstraints.expand(height: 200.0),
-      child: Image.asset('assets/logo.png', fit: BoxFit.cover),
+      child: 
+         Image.asset('assets/logo.png' , fit: BoxFit.cover,)
     );
   }
 
