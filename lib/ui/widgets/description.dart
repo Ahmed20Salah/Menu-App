@@ -33,8 +33,9 @@ class DescriptionState extends State<Description> {
       child: _mode
           ? Center(
               child: Stack(
-                alignment: Alignment.center,
+                alignment: Alignment.topLeft,
                 children: <Widget>[
+                  
                   Container(
                     alignment: Alignment.center,
                     constraints: BoxConstraints(
@@ -184,83 +185,84 @@ class DescriptionState extends State<Description> {
                     width: MediaQuery.of(context).size.width,
                     alignment: Alignment.center,
                     child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: <Widget>[
-                              Container(
-                                alignment: Alignment.centerRight,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    Text(
-                                      ' ${widget.item.name}',
-                                      textDirection: TextDirection.rtl,
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 24),
-                                    ),
-                                    Text(
-                                      ':الاسم',
-                                      style: TextStyle(
-                                          color: Colors.green, fontSize: 24),
-                                    ),
-                                  ],
-                                ),
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Container(
+                              alignment: Alignment.centerRight,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  Text(
+                                    ' ${widget.item.name}',
+                                    textDirection: TextDirection.rtl,
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 24),
+                                  ),
+                                  Text(
+                                    ':الاسم',
+                                    style: TextStyle(
+                                        color: Colors.green, fontSize: 24),
+                                  ),
+                                ],
                               ),
-                              SizedBox(
-                                height: 5,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Container(
+                              alignment: Alignment.centerRight,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  Text(
+                                    ' ${widget.item.price}',
+                                    textDirection: TextDirection.rtl,
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 24),
+                                  ),
+                                  Text(
+                                    ':السعر',
+                                    style: TextStyle(
+                                        color: Colors.green, fontSize: 24),
+                                  ),
+                                ],
                               ),
-                              Container(
-                                alignment: Alignment.centerRight,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    Text(
-                                      ' ${widget.item.price}',
-                                      textDirection: TextDirection.rtl,
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 24),
-                                    ),
-                                    Text(
-                                      ':السعر',
-                                      style: TextStyle(
-                                          color: Colors.green, fontSize: 24),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                   Container(
-                                     constraints: BoxConstraints(maxWidth:300.0),
-                                     
-                                     child:Text(
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Container(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Container(
+                                    constraints:
+                                        BoxConstraints(maxWidth: 300.0),
+                                    child: Text(
                                       ' ${widget.item.description}',
                                       textDirection: TextDirection.rtl,
                                       softWrap: true,
                                       maxLines: 4,
-
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 24),
-                                    ), ) ,
-                                    Text(
-                                      ':الوصف',
-                                      style: TextStyle(
-                                          color: Colors.green, fontSize: 24),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  Text(
+                                    ':الوصف',
+                                    style: TextStyle(
+                                        color: Colors.green, fontSize: 24),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ]),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(
                     height: 20.0,
@@ -277,11 +279,13 @@ class DescriptionState extends State<Description> {
                             color: Colors.white,
                           ),
                           onPressed: () {
-                            setState(() {
-                              if (count > 1) {
-                                count--;
-                              }
-                            });
+                            setState(
+                              () {
+                                if (count > 1) {
+                                  count--;
+                                }
+                              },
+                            );
                           },
                         ),
                         Text(

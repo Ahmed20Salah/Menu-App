@@ -37,11 +37,13 @@ class EditState extends State<Edit> {
                 children: <Widget>[
                   InkWell(
                     child: Container(
-                      child: Text('Table ${model.order.table}',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: width < 610 ? 15 : 28,
-                          )),
+                      child: Text(
+                        'Table ${model.order.table}',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: width < 610 ? 15 : 28,
+                        ),
+                      ),
                     ),
                     onTap: () {
                       showDialog(
@@ -84,7 +86,7 @@ class EditState extends State<Edit> {
                                     );
                                   }).toList()),
                             ),
-                          ));
+                          ),);
                     },
                   ),
                   SizedBox(
@@ -152,7 +154,7 @@ class EditState extends State<Edit> {
                                               child: AlertDialog(
                                                 backgroundColor:
                                                     Colors.transparent,
-                                                title: AddItem(width:width),
+                                                title: AddItem(width: width),
                                               ),
                                             ),
                                           );
@@ -182,7 +184,8 @@ class EditState extends State<Edit> {
                                               child: AlertDialog(
                                                 backgroundColor:
                                                     Colors.transparent,
-                                                title: AddCategory(width: width),
+                                                title:
+                                                    AddCategory(width: width),
                                               ),
                                             ),
                                           );
@@ -234,7 +237,7 @@ class EditState extends State<Edit> {
               ),
             ),
             Container(
-                height: MediaQuery.of(context).size.height -100.0,
+                height: MediaQuery.of(context).size.height - 100.0,
                 child: StreamBuilder(
                   stream: model.cat.stream,
                   builder: (context, snapshot) {
